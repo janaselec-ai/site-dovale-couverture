@@ -224,6 +224,7 @@ footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap
 @media (max-width:520px){.types{grid-template-columns:repeat(2,minmax(0,1fr))}.why{grid-template-columns:1fr}.topbar-in>span:first-child{display:none}}
 @media (prefers-reduced-motion:reduce){.type img{transition:none}}
 .gallery video{width:100%;height:100%;object-fit:cover;display:block}
+.more-wrap{display:flex;justify-content:center;margin-top:24px}
 </style>
 </head>
 <body>
@@ -360,6 +361,7 @@ footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap
         <figure class="g-wide" data-cat="charpente"><img src="img/r6.jpg" alt="Silhouette de la charpente sur l'échafaudage, vue depuis la rue" loading="lazy"><figcaption>La charpente vue de la rue</figcaption></figure>
         <figure class="g-tall" data-cat="charpente"><img src="img/c4.jpg" alt="Ossature bois d'une couverture de terrasse en cours de montage" loading="lazy"><figcaption>Ossature de terrasse</figcaption></figure>
       </div>
+      <div class="more-wrap"><button type="button" class="btn btn-line" id="more">Voir toutes les photos</button></div>
     </div>
   </section>
 
@@ -569,12 +571,28 @@ document.getElementById('f').addEventListener('submit',function(e){
 });
 
 (function(){
-  var chips=document.querySelectorAll('.chip'),figs=document.querySelectorAll('#gallery figure');
+  var LIMIT=12, expanded=false, cur='all';
+  var chips=document.querySelectorAll('.chip'), figs=[].slice.call(document.querySelectorAll('#gallery figure')), more=document.getElementById('more');
+  function apply(){
+    var shown=0, total=0;
+    figs.forEach(function(g){
+      var match=(cur==='all'||g.dataset.cat===cur);
+      if(match) total++;
+      var vis=match&&(expanded||shown<LIMIT);
+      if(vis) shown++;
+      g.hidden=!vis;
+    });
+    var rest=total-shown;
+    more.hidden=expanded||rest<=0;
+    more.textContent='Voir les '+rest+' autres photos';
+  }
   chips.forEach(function(c){c.addEventListener('click',function(){
-    var f=c.dataset.f;
+    cur=c.dataset.f; expanded=false;
     chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});
-    figs.forEach(function(g){g.hidden=!(f==='all'||g.dataset.cat===f)});
+    apply();
   })});
+  more.addEventListener('click',function(){expanded=true;apply();});
+  apply();
 })();
 </script>
 
