@@ -503,7 +503,7 @@ footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap
           <p>Devis gratuit et sans engagement. Laissez votre numéro, on vous rappelle.</p>
         </div>
         <div><div class="k">Téléphone</div><div class="v">06 71 00 98 04</div></div>
-        <div><div class="k">E-mail</div><div class="v v-mail">entreprisedovale@yahoo.fr</div></div>
+        <div><div class="k">E-mail</div><div class="v v-mail">contact@dovale-couverture.fr</div></div>
         <div><div class="k">Adresse</div><div class="v">14 avenue Aristide Briand<br>93460 Gournay-sur-Marne</div></div>
         <div><div class="k">Horaires</div><div class="v">Lun–ven 8 h – 19 h<br>Samedi 8 h – 12 h</div></div>
         <div><div class="k">Artisan</div><div class="v">Georges Do Vale Alves</div></div>
@@ -541,7 +541,7 @@ footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap
   <div class="wrap foot">
     <div class="foot-col"><span class="brand">Entreprise Do Vale<small>Couverture · Charpente</small></span><p>Charpente traditionnelle, couverture et zinguerie à Gournay-sur-Marne et dans l'Est parisien, depuis 2004.</p></div>
     <div class="foot-col"><span class="fh">Le site</span><a href="#prestations">Prestations</a><a href="#realisations">Réalisations</a><a href="#avis">Avis clients</a><a href="#faq">FAQ</a><a href="#devis">Contact</a></div>
-    <div class="foot-col"><span class="fh">Contact</span><span>06 71 00 98 04</span><span>entreprisedovale@yahoo.fr</span><span>14 avenue Aristide Briand<br>93460 Gournay-sur-Marne</span><span>Lun–ven 8 h – 19 h · sam 8 h – 12 h</span></div>
+    <div class="foot-col"><span class="fh">Contact</span><span>06 71 00 98 04</span><span>contact@dovale-couverture.fr</span><span>14 avenue Aristide Briand<br>93460 Gournay-sur-Marne</span><span>Lun–ven 8 h – 19 h · sam 8 h – 12 h</span></div>
   </div>
   <div class="wrap foot-legal">
     <span>© 2026 Entreprise Do Vale · Entrepreneur individuel · SIRET 453 611 063 00034 · NAF 43.91A</span>
@@ -564,7 +564,7 @@ document.getElementById('f').addEventListener('submit',function(e){
   .then(function(r){return r.json()}).then(function(d){
     if(d.success===true||d.success==='true'){f.reset();ok.textContent='Merci, votre demande a bien été envoyée. Georges vous rappelle rapidement.';}
     else{throw new Error('ko')}
-  }).catch(function(){ok.textContent='L\'envoi n\'a pas fonctionné. Appelez directement le 06 71 00 98 04 ou écrivez à '+FORM_TO+'.';})
+  }).catch(function(){ok.textContent='L\'envoi n\'a pas fonctionné. Appelez directement le 06 71 00 98 04 ou écrivez à contact@dovale-couverture.fr.';})
   .finally(function(){ok.hidden=false;btn.disabled=false;btn.textContent='Envoyer ma demande';});
 });
 
