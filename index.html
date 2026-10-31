@@ -522,6 +522,7 @@ footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap
             </select>
           </label>
         </div>
+        <input type="text" id="hp" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
         <label for="msg">Votre projet<textarea id="msg" name="msg" placeholder="Surface approximative, type de toiture, problème constaté…"></textarea></label>
         <button class="btn btn-fill" type="submit">Envoyer ma demande</button>
         <p class="ok" id="ok" hidden></p>
@@ -549,13 +550,22 @@ footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap
 </footer>
 
 <script>
+var FORM_TO='entreprisedovale@yahoo.fr';
 document.getElementById('f').addEventListener('submit',function(e){
   e.preventDefault();
-  var ok=document.getElementById('ok');
-  var need=['nom','tel','ville'].filter(function(id){return !document.getElementById(id).value.trim()});
-  if(need.length){ok.textContent='Merci de renseigner votre nom, votre téléphone et la ville du chantier.';ok.hidden=false;return;}
-  ok.textContent='Aperçu : sur le site en ligne, cette demande arrivera directement sur entreprisedovale@yahoo.fr. En attendant, appelez le 06 71 00 98 04 ou écrivez à cette adresse.';
-  ok.hidden=false;
+  var f=e.target, ok=document.getElementById('ok'), btn=f.querySelector('button[type=submit]');
+  var v=function(id){return document.getElementById(id).value.trim()};
+  if(!v('nom')||!v('tel')||!v('ville')){ok.textContent='Merci de renseigner votre nom, votre téléphone et la ville du chantier.';ok.hidden=false;return;}
+  if(document.getElementById('hp').value){return;}
+  btn.disabled=true; btn.textContent='Envoi en cours…'; ok.hidden=true;
+  fetch('https://formsubmit.co/ajax/'+FORM_TO,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+    body:JSON.stringify({_subject:'Demande de devis – '+v('type')+' – '+v('ville'),_template:'table',
+      Nom:v('nom'),Telephone:v('tel'),Ville:v('ville'),Travaux:v('type'),Message:v('msg')||'(aucun message)'})})
+  .then(function(r){return r.json()}).then(function(d){
+    if(d.success===true||d.success==='true'){f.reset();ok.textContent='Merci, votre demande a bien été envoyée. Georges vous rappelle rapidement.';}
+    else{throw new Error('ko')}
+  }).catch(function(){ok.textContent='L\'envoi n\'a pas fonctionné. Appelez directement le 06 71 00 98 04 ou écrivez à '+FORM_TO+'.';})
+  .finally(function(){ok.hidden=false;btn.disabled=false;btn.textContent='Envoyer ma demande';});
 });
 
 (function(){
