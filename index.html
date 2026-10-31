@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Entreprise Do Vale</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=Alegreya+Sans:wght@400;500;700&display=swap">
+<style>
+/* Layout : bandeau ardoise en tête avec la ferme de charpente dessinée, puis sections claires sur pierre, colonne max 1120px */
+:root{
+  --bg:#eef0ee;        /* pierre calcaire froide */
+  --surface:#ffffff;
+  --fg:#1d2329;        /* encre */
+  --muted:#5b646c;
+  --slate:#2b3640;     /* ardoise */
+  --slate-fg:#e9ecee;
+  --oak:#b07a3c;       /* chêne */
+  --line:#cfd5d8;
+  --display:"Zilla Slab", Rockwell, "Roboto Slab", Georgia, serif;
+  --body:"Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151a1f;--surface:#1d242b;--fg:#e6e9eb;--muted:#9aa4ad;--slate:#0f1418;--slate-fg:#e6e9eb;--oak:#d39a57;--line:#323c45;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#151a1f;--surface:#1d242b;--fg:#e6e9eb;--muted:#9aa4ad;--slate:#0f1418;--slate-fg:#e6e9eb;--oak:#d39a57;--line:#323c45;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font:400 1.125rem/1.6 var(--body)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700}
+h3{font-size:1.3rem;font-weight:700}
+p{margin:0}
+a{color:inherit}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--oak)}
+:focus-visible{outline:3px solid var(--oak);outline-offset:3px}
+
+/* Nav */
+.top{background:var(--slate);color:var(--slate-fg)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:18px;flex-wrap:wrap}
+.brand{font-family:var(--display);font-weight:700;font-size:1.25rem;text-decoration:none;display:flex;flex-direction:column;line-height:1.05}
+.brand small{font-family:var(--body);font-weight:500;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--oak)}
+.nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+.nav ul a{text-decoration:none;font-weight:500;opacity:.85}
+.nav ul a:hover{opacity:1;color:var(--oak)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding-block:48px 72px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.2rem);font-weight:700;color:var(--slate-fg)}
+.hero h1 em{font-style:normal;color:var(--oak)}
+.hero p.lead{margin-top:20px;font-size:1.25rem;max-width:34ch;opacity:.88}
+.cta{display:flex;gap:14px;margin-top:32px;flex-wrap:wrap}
+.btn{display:inline-block;padding:14px 24px;font:700 1rem var(--body);text-decoration:none;border:2px solid var(--oak);cursor:pointer}
+.btn-fill{background:var(--oak);color:#1a1208}
+.btn-fill:hover{filter:brightness(1.08)}
+.btn-ghost{color:var(--slate-fg);background:transparent}
+.btn-ghost:hover{background:rgba(255,255,255,.06)}
+.truss{width:100%;max-width:100%;height:auto}
+.truss text{font:500 13px var(--body);fill:var(--slate-fg)}
+.truss .lbl{fill:var(--oak);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:11px}
+.caption{font-size:.85rem;opacity:.7;margin-top:8px;text-align:right}
+
+/* Sections */
+section{padding-block:80px}
+.head{display:flex;flex-direction:column;gap:12px;max-width:640px;margin-bottom:44px}
+.head p{color:var(--muted)}
+
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.svc{background:var(--surface);padding:30px 28px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.svc p{color:var(--muted)}
+.svc ul{margin:6px 0 0;padding-left:18px;color:var(--fg)}
+.svc li{margin:2px 0}
+.svc .tag{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--oak)}
+
+.craft{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.craft p+p{margin-top:16px}
+.craft .text p{max-width:60ch}
+.gloss{border-top:2px solid var(--fg)}
+.gloss div{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
+.gloss dt{font-family:var(--display);font-weight:700}
+.gloss dd{margin:0;color:var(--muted)}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;counter-reset:s}
+.step{border-top:2px solid var(--oak);padding-top:16px;counter-increment:s}
+.step::before{content:counter(s);font-family:var(--display);font-weight:700;font-size:2rem;color:var(--oak);display:block;margin-bottom:6px}
+.step p{color:var(--muted);margin-top:6px}
+
+.zone{background:var(--slate);color:var(--slate-fg)}
+.zone .head p{color:inherit;opacity:.8}
+.towns{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.towns li{border:1px solid rgba(255,255,255,.22);padding:8px 16px;font-weight:500}
+.towns li.home{background:var(--oak);border-color:var(--oak);color:#1a1208;font-weight:700}
+
+.contact{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+.coords{display:flex;flex-direction:column;gap:20px}
+.coords .k{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.coords .v{font-family:var(--display);font-size:1.35rem;font-weight:700;user-select:all}
+.todo{background:color-mix(in srgb,var(--oak) 18%,transparent);padding:0 4px}
+form{background:var(--surface);border:1px solid var(--line);padding:28px;display:grid;gap:16px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:flex;flex-direction:column;gap:6px;font-weight:500;font-size:.95rem;min-width:0}
+input,select,textarea{font:inherit;font-size:1rem;padding:11px 12px;border:1px solid var(--line);background:var(--bg);color:var(--fg);border-radius:0;width:100%}
+textarea{min-height:120px;resize:vertical}
+.ok{border-left:3px solid var(--oak);padding:10px 14px;background:var(--bg)}
+
+footer{border-top:1px solid var(--line);padding-block:28px;color:var(--muted);font-size:.95rem}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .hero,.craft,.contact{grid-template-columns:1fr}
+  .services{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .steps,.row{grid-template-columns:1fr}
+  .gloss div{grid-template-columns:1fr;gap:2px}
+  .nav ul{gap:14px;font-size:1rem}
+  section{padding-block:56px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .truss .beam{stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.2s ease-out forwards}
+  .truss .beam:nth-of-type(2){animation-delay:.15s}.truss .beam:nth-of-type(3){animation-delay:.3s}
+  .truss .beam:nth-of-type(4){animation-delay:.45s}.truss .beam:nth-of-type(5){animation-delay:.6s}
+  .truss .beam:nth-of-type(6){animation-delay:.75s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+}
+
+.hero-photo{margin:0;position:relative}
+.hero-photo img{display:block;width:100%;max-height:560px;object-fit:cover;box-shadow:12px 12px 0 var(--oak)}
+.hero-photo figcaption{font-size:.85rem;opacity:.7;margin-top:22px}
+.gallery-sec{padding-top:0}
+.gallery{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:220px;gap:10px;grid-auto-flow:dense}
+.gallery figure{margin:0;position:relative;overflow:hidden;background:var(--slate)}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gallery figure:hover img{transform:scale(1.04)}
+.gallery figcaption{position:absolute;left:0;bottom:0;padding:8px 12px;background:var(--slate);color:var(--slate-fg);font-size:.85rem;font-weight:500}
+.g-tall{grid-row:span 2}
+.g-wide{grid-column:span 2}
+.artisan{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:center}
+.portrait{margin:0}
+.portrait img{display:block;width:100%;max-height:520px;object-fit:cover;object-position:center 30%;box-shadow:-12px 12px 0 var(--oak)}
+.artisan-text{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.artisan-text p:not(.eyebrow){color:var(--muted);max-width:56ch}
+@media (max-width:900px){.artisan{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,1fr)}.hero-photo img{max-height:420px}}
+@media (max-width:520px){.gallery{grid-auto-rows:170px}.g-wide{grid-column:span 2}}
+@media (prefers-reduced-motion:reduce){.gallery img{transition:none}}
+
+.svc-img{display:block;width:calc(100% + 56px);max-width:none;margin:-30px -28px 8px;aspect-ratio:4/3;object-fit:cover}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{font:500 .95rem var(--body);padding:8px 14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.chip span{font-size:.8rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.chip[aria-pressed="true"]{background:var(--slate);color:var(--slate-fg);border-color:var(--slate)}
+.chip[aria-pressed="true"] span{color:var(--oak)}
+@media (max-width:520px){.g-tall{grid-row:span 2}}
+.gbadge{display:inline-flex;align-items:center;gap:10px;margin-top:24px;padding:8px 14px;border:1px solid rgba(255,255,255,.22);color:var(--slate-fg);text-decoration:none;font-size:.95rem}
+.gbadge:hover{border-color:var(--oak)}
+.stars{color:var(--oak);letter-spacing:2px}
+.reviews-sec{padding-top:0}
+.reviews-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px}
+.score{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.score .big{font-family:var(--display);font-weight:700;font-size:3rem;line-height:1}
+.score .muted{color:var(--muted);font-size:.95rem}
+.reviews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.reviews blockquote{margin:0;background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--oak);padding:24px;display:flex;flex-direction:column;gap:14px;justify-content:space-between}
+.reviews p{margin:0}
+.reviews cite{font-style:normal;font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.btn-line{color:var(--fg);background:transparent}
+.btn-line:hover{background:color-mix(in srgb,var(--oak) 12%,transparent)}
+@media (max-width:900px){.reviews{grid-template-columns:1fr}.score{align-items:flex-start}}
+
+.topbar{border-bottom:1px solid rgba(255,255,255,.12);font-size:.88rem}
+.topbar-in{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding-block:8px;opacity:.9}
+.topbar-r{display:flex;align-items:center;gap:14px}
+.tb-tel{font-weight:700;font-variant-numeric:tabular-nums;user-select:all}
+.tb-btn{background:var(--oak);color:#1a1208;font-weight:700;padding:5px 12px;text-decoration:none}
+.v-mail{font-size:1.1rem;overflow-wrap:anywhere;user-select:all}
+.stats{background:var(--surface);border-bottom:1px solid var(--line)}
+.stats-in{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding-block:28px}
+.stats-in div{display:flex;flex-direction:column;gap:4px;border-left:2px solid var(--oak);padding-left:14px}
+.stats .n{font-family:var(--display);font-weight:700;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums}
+.stats .n small{font-size:1rem;color:var(--muted)}
+.stats .l{color:var(--muted);font-size:.95rem;line-height:1.35}
+.why-sec{padding-top:0}
+.why{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.why-card{display:flex;flex-direction:column;gap:10px;padding:24px;background:var(--surface);border:1px solid var(--line)}
+.why-card svg{color:var(--oak)}
+.why-card p{color:var(--muted);margin:0}
+.types-sec{padding-top:0}
+.types{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.type{position:relative;display:block;aspect-ratio:3/4;overflow:hidden;color:#fff;text-decoration:none;background:var(--slate)}
+.type img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.type:hover img{transform:scale(1.05)}
+.type span{position:absolute;inset:auto 0 0 0;padding:40px 14px 14px;font-family:var(--display);font-weight:700;font-size:1.1rem;line-height:1.15;background:linear-gradient(transparent,rgba(10,14,18,.85))}
+.faq-sec{padding-top:0}
+.faq-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:48px;align-items:start}
+.faq{border-top:2px solid var(--fg)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 36px 18px 0;font-family:var(--display);font-weight:700;font-size:1.15rem;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.5rem;color:var(--oak)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{margin:0 0 18px;color:var(--muted);max-width:62ch}
+.final{background:var(--oak);color:#1a1208;padding-block:48px}
+.final-in{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.final h2{font-size:clamp(1.6rem,3.5vw,2.2rem)}
+.final p{margin-top:8px}
+.final-cta{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.final-tel{font-family:var(--display);font-weight:700;font-size:1.8rem;font-variant-numeric:tabular-nums;user-select:all}
+.final .btn-fill{background:#1a1208;color:#f3ead9;border-color:#1a1208}
+footer{padding-block:0}
+footer .foot{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:32px;padding-block:40px}
+.foot-col{display:flex;flex-direction:column;gap:8px;min-width:0}
+.foot-col p{margin:6px 0 0;max-width:38ch}
+.foot-col a{text-decoration:none}
+.foot-col a:hover{color:var(--oak)}
+.fh{font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--fg)}
+footer .brand{color:var(--fg)}
+footer .foot-legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-block:18px;font-size:.85rem}
+@media (max-width:900px){.stats-in,.why{grid-template-columns:repeat(2,minmax(0,1fr))}.types{grid-template-columns:repeat(3,minmax(0,1fr))}.faq-wrap,footer .foot{grid-template-columns:1fr}}
+@media (max-width:520px){.types{grid-template-columns:repeat(2,minmax(0,1fr))}.why{grid-template-columns:1fr}.topbar-in>span:first-child{display:none}}
+@media (prefers-reduced-motion:reduce){.type img{transition:none}}
+.gallery video{width:100%;height:100%;object-fit:cover;display:block}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar"><div class="wrap topbar-in">
+    <span>Lun–ven 8 h – 19 h · sam 8 h – 12 h</span>
+    <span class="topbar-r"><span class="tb-tel">06 71 00 98 04</span><a class="tb-btn" href="#devis">Être rappelé</a></span>
+  </div></div>
+  <div class="wrap nav">
+    <a class="brand" href="#accueil">Entreprise Do Vale<small>Couverture · Charpente</small></a>
+    <ul>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#realisations">Réalisations</a></li>
+      <li><a href="#avis">Avis</a></li>
+      <li><a href="#artisan">L'artisan</a></li>
+      <li><a href="#zone">Secteur</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#devis">Devis</a></li>
+    </ul>
+  </div>
+  <div class="wrap hero" id="accueil">
+    <div>
+      <p class="eyebrow">Gournay-sur-Marne · Depuis 2004</p>
+      <h1>Votre toit, taillé et posé <em>à la main.</em></h1>
+      <p class="lead">Charpente traditionnelle, couverture et zinguerie pour les maisons de l'Est parisien. Georges Do Vale Alves, artisan charpentier-couvreur, votre seul interlocuteur du devis au dernier faîtage.</p>
+      <div class="cta">
+        <a class="btn btn-fill" href="#devis">Demander un devis</a>
+        <a class="btn btn-ghost" href="#prestations">Nos prestations</a>
+      </div>
+      <a class="gbadge" href="#avis"><span class="stars" aria-hidden="true">★★★★★</span><span><strong>5,0</strong> sur Google · 10 avis</span></a>
+    </div>
+    <figure class="hero-photo">
+      <img src="img/o1.jpg" alt="Charpente traditionnelle en chêne chevillée, vue d'en dessous contre le ciel bleu" width="900" height="1200">
+      <figcaption>Charpente en chêne chevillée, poinçon taillé en pointe de diamant</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+  <div class="stats"><div class="wrap stats-in">
+    <div><span class="n">2004</span><span class="l">Installé à Gournay depuis</span></div>
+    <div><span class="n">5,0<small>/5</small></span><span class="l">Note Google, 10 avis</span></div>
+    <div><span class="n">3</span><span class="l">Métiers : charpente, couverture, zinguerie</span></div>
+    <div><span class="n">0 €</span><span class="l">Devis gratuit et sans engagement</span></div>
+  </div></div>
+
+  <section id="prestations">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Prestations</p>
+        <h2>Tout ce qui se passe au-dessus de vos plafonds</h2>
+        <p>Neuf, rénovation ou réparation urgente : on intervient sur l'ensemble de la toiture, de la structure bois jusqu'aux gouttières.</p>
+      </div>
+      <div class="services">
+        <article class="svc">
+          <img class="svc-img" src="img/f1.jpg" alt="Charpente en chêne apparente dans une pièce terminée, avec fenêtres de toit" loading="lazy">
+          <span class="tag">Structure</span>
+          <h3>Charpente traditionnelle</h3>
+          <p>Conception, taille et levage de charpentes bois assemblées à l'ancienne.</p>
+          <ul><li>Charpente neuve et extension</li><li>Remplacement de pièces abîmées</li><li>Traitement du bois</li><li>Aménagement de combles</li></ul>
+        </article>
+        <article class="svc">
+          <img class="svc-img" src="img/a1.jpg" alt="Couverture neuve en ardoise naturelle avec fenêtre de toit" loading="lazy">
+          <span class="tag">Étanchéité</span>
+          <h3>Couverture</h3>
+          <p>Pose et réfection de toitures dans les matériaux de la région.</p>
+          <ul><li>Tuile mécanique et plate</li><li>Zinc à joint debout ou à tasseaux</li><li>Ardoise naturelle</li><li>Velux et fenêtres de toit</li><li>Isolation sous toiture</li></ul>
+        </article>
+        <article class="svc">
+          <img class="svc-img" src="img/g1.jpg" alt="Gouttière et bandeau en zinc neufs en bas de toiture" loading="lazy">
+          <span class="tag">Évacuation</span>
+          <h3>Zinguerie &amp; entretien</h3>
+          <p>Ce qui protège votre toit dans la durée et évite les infiltrations.</p>
+          <ul><li>Gouttières, chéneaux, descentes</li><li>Solins et noues</li><li>Recherche de fuite, réparation</li><li>Démoussage et traitement</li></ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="realisations" class="gallery-sec">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Réalisations</p>
+        <h2>Sur le chantier</h2>
+        <p>Charpentes en chêne chevillées, toitures en ardoise, tuiles et zinc, chéneaux soudés, bois tracés à la main : des photos prises sur les chantiers de l'entreprise.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filtrer les réalisations">
+        <button type="button" class="chip" aria-pressed="true" data-f="all">Tout <span>40</span></button>
+        <button type="button" class="chip" aria-pressed="false" data-f="charpente">Charpente <span>14</span></button>
+        <button type="button" class="chip" aria-pressed="false" data-f="zinguerie">Couverture &amp; zinguerie <span>18</span></button>
+        <button type="button" class="chip" aria-pressed="false" data-f="taille">Taille &amp; traçage <span>8</span></button>
+      </div>
+      <div class="gallery" id="gallery">
+        <figure class="g-tall g-video" data-cat="taille"><video src="img/chantier.mp4" poster="img/chantier-poster.jpg" muted loop playsinline autoplay preload="metadata" aria-label="Vidéo de taille d'une pièce de charpente en atelier"></video><figcaption>En atelier, en vidéo</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/o2.jpg" alt="Ferme de charpente en chêne assemblée par tenons, mortaises et chevilles" loading="lazy"><figcaption>Ferme en chêne chevillée</figcaption></figure>
+        <figure class="g-wide" data-cat="charpente"><img src="img/f1.jpg" alt="Charpente en chêne apparente au plafond d'une pièce terminée" loading="lazy"><figcaption>Charpente apparente, pièce terminée</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/a1.jpg" alt="Couverture neuve en ardoise naturelle avec fenêtre de toit" loading="lazy"><figcaption>Ardoise naturelle et fenêtre de toit</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/o5.jpg" alt="Pièce de chêne taillée pour un assemblage, posée sur tréteaux" loading="lazy"><figcaption>Assemblage taillé à la main</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/o3.jpg" alt="Charpente en chêne à quatre pans vue de dessous" loading="lazy"><figcaption>Chêne : arêtiers et poinçon</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/a3.jpg" alt="Maison en pierre avec toiture en ardoise neuve et gouttières" loading="lazy"><figcaption>Ardoise et gouttières</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/o7.jpg" alt="Poutre en chêne entaillée à intervalles réguliers en atelier" loading="lazy"><figcaption>Entailles pour les solives</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/m4.jpg" alt="Couverture en zinc à tasseaux avec arêtier soudé" loading="lazy"><figcaption>Zinc à tasseaux, arêtier</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/o4.jpg" alt="Assemblage chevillé autour du poinçon d'une charpente en chêne" loading="lazy"><figcaption>Poinçon et contrefiches</figcaption></figure>
+        <figure class="g-wide" data-cat="zinguerie"><img src="img/m3.jpg" alt="Toiture en zinc anthracite à joints debout avec gouttière" loading="lazy"><figcaption>Zinc anthracite à joint debout</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/o8.jpg" alt="Traçage et réglet métallique sur une poutre en chêne" loading="lazy"><figcaption>Traçage avant la coupe</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/a4.jpg" alt="Petit pan en ardoise avec gouttière et descente noires" loading="lazy"><figcaption>Pan d'ardoise et descente</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/o6.jpg" alt="Pièces de chêne taillées et rangées, prêtes à être levées" loading="lazy"><figcaption>Bois taillés prêts au levage</figcaption></figure>
+        <figure class="g-wide" data-cat="zinguerie"><img src="img/m1.jpg" alt="Rive et bandeau en zinc noir sur un abri en bois" loading="lazy"><figcaption>Rive et bandeau en zinc</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/s1.jpg" alt="Charpente en sapin à plusieurs pans vue du dessous" loading="lazy"><figcaption>Charpente à pans en sapin</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/r1.jpg" alt="Fermes de charpente levées au-dessus d'un mur en parpaings, devant un bâtiment ancien" loading="lazy"><figcaption>Levage des fermes</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/k1.jpg" alt="Toiture en tuiles plates neuves avec une fenêtre de toit" loading="lazy"><figcaption>Tuiles plates et fenêtre de toit</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/g2.jpg" alt="Gouttière demi-ronde et bandeau en zinc neufs sur une maison en brique" loading="lazy"><figcaption>Gouttière et bandeau zinc</figcaption></figure>
+        <figure class="g-wide" data-cat="zinguerie"><img src="img/z1.jpg" alt="Couverture métallique noire à joints debout avec une fenêtre de toit" loading="lazy"><figcaption>Couverture métal et fenêtre de toit</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/c1.jpg" alt="Charpente complète vue d'en dessous, fermes, pannes et chevrons" loading="lazy"><figcaption>Fermes et chevrons vus du sol</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/t1.jpg" alt="Tracés au crayon sur une pièce de bois avant la taille, un compagnon en arrière-plan" loading="lazy"><figcaption>Traçage avant la taille</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/z2.jpg" alt="Compagnon préparant la pose d'un chéneau en zinc en bas de pente" loading="lazy"><figcaption>Pose d'un chéneau</figcaption></figure>
+        <figure class="g-wide" data-cat="charpente"><img src="img/r2.jpg" alt="Fermes de charpente vues d'en dessous au coucher du soleil" loading="lazy"><figcaption>Fermes et pannes en place</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/z3.jpg" alt="Chéneau en zinc en cours de pose le long d'une toiture, au-dessus des jardins" loading="lazy"><figcaption>Chéneau en zinc soudé</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/k3.jpg" alt="Couverture en zinc à tasseaux en cours de pose, avec fenêtres de toit" loading="lazy"><figcaption>Toiture zinc en cours</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/k2.jpg" alt="Pan de toiture en tuiles plates neuves avec chatières de ventilation" loading="lazy"><figcaption>Pan de tuiles plates</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/c2.jpg" alt="Charpente terminée vue de l'intérieur, sous l'écran de sous-toiture noir" loading="lazy"><figcaption>Charpente sous écran</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/t2.jpg" alt="Pièces de charpente numérotées et empilées, prêtes au levage" loading="lazy"><figcaption>Bois repérés et numérotés</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/z4.jpg" alt="Chéneau en zinc soudé au bas d'une toiture en cours de liteaunage" loading="lazy"><figcaption>Raccord de chéneau</figcaption></figure>
+        <figure class="g-wide" data-cat="charpente"><img src="img/r4.jpg" alt="Charpente complète avec chevrons, vue de l'intérieur" loading="lazy"><figcaption>Chevronnage terminé</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/r3.jpg" alt="Chevrons posés sur la pente du toit, vue en enfilade" loading="lazy"><figcaption>Pose des chevrons</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/z6.jpg" alt="Outils de soudure posés dans un chéneau en zinc" loading="lazy"><figcaption>Soudure à l'étain</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/k4.jpg" alt="Bandes de zinc posées entre tasseaux, fenêtres de toit en attente" loading="lazy"><figcaption>Bacs zinc et fenêtres de toit</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/z8.jpg" alt="Chéneau en zinc soudé le long d'un mur, voligeage à côté" loading="lazy"><figcaption>Chéneau soudé le long du mur</figcaption></figure>
+        <figure class="g-tall" data-cat="taille"><img src="img/t3.jpg" alt="Plancher en solives de bois assemblées sur sabots métalliques" loading="lazy"><figcaption>Solivage bois</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/c3.jpg" alt="Structure d'appentis en bois avec voligeage, vue de l'intérieur" loading="lazy"><figcaption>Appentis bois</figcaption></figure>
+        <figure class="g-tall" data-cat="zinguerie"><img src="img/z5.jpg" alt="Chéneau en zinc posé le long d'un mur, à côté d'un voligeage" loading="lazy"><figcaption>Chéneau contre mur</figcaption></figure>
+        <figure class="g-wide" data-cat="charpente"><img src="img/r6.jpg" alt="Silhouette de la charpente sur l'échafaudage, vue depuis la rue" loading="lazy"><figcaption>La charpente vue de la rue</figcaption></figure>
+        <figure class="g-tall" data-cat="charpente"><img src="img/c4.jpg" alt="Ossature bois d'une couverture de terrasse en cours de montage" loading="lazy"><figcaption>Ossature de terrasse</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="pourquoi" class="why-sec">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Pourquoi nous choisir</p>
+        <h2>Ce que les clients retiennent</h2>
+      </div>
+      <div class="why">
+        <div class="why-card"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg><h3>Réactivité</h3><p>Une fuite ne peut pas attendre. On se déplace vite pour bâcher, chercher l'origine et réparer.</p></div>
+        <div class="why-card"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>Délais tenus</h3><p>La date annoncée au devis est celle du chantier. Les avis clients le confirment.</p></div>
+        <div class="why-card"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l7-6 7 6v11"/><path d="M9 21v-6h6v6"/></svg><h3>Travail soigné</h3><p>Charpente tracée et taillée à la main, zinc soudé sur place, chantier propre chaque soir.</p></div>
+        <div class="why-card"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><h3>Un seul interlocuteur</h3><p>Georges suit votre projet de la visite à la réception. Vous savez toujours qui appeler.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="chantiers" class="types-sec">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Types de chantiers</p>
+        <h2>Pour les particuliers comme pour les constructeurs</h2>
+      </div>
+      <div class="types">
+        <a class="type" href="#realisations"><img src="img/k1.jpg" alt="Toiture de maison en tuiles plates neuves" loading="lazy"><span>Maisons individuelles</span></a>
+        <a class="type" href="#realisations"><img src="img/c1.jpg" alt="Charpente neuve levée sur un bâtiment en construction" loading="lazy"><span>Constructions neuves</span></a>
+        <a class="type" href="#realisations"><img src="img/c3.jpg" alt="Appentis en bois en cours de construction" loading="lazy"><span>Extensions et appentis</span></a>
+        <a class="type" href="#realisations"><img src="img/k3.jpg" alt="Couverture zinc avec fenêtres de toit" loading="lazy"><span>Toitures zinc et fenêtres de toit</span></a>
+        <a class="type" href="#realisations"><img src="img/g2.jpg" alt="Gouttière et bandeau zinc refaits" loading="lazy"><span>Rénovation et réparation</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="savoir-faire" style="padding-top:0">
+    <div class="wrap craft">
+      <div class="text">
+        <p class="eyebrow">Savoir-faire</p>
+        <h2 style="margin:12px 0 24px">Le métier de charpentier, pas celui de poseur</h2>
+        <p>Une charpente traditionnelle se calcule, se trace et se taille avant d'être levée. Chaque pièce est ajustée à la maison, pas l'inverse. C'est plus long qu'un kit de fermettes industrielles, et ça dure plusieurs générations.</p>
+        <p>Sur chantier, on vous explique ce qu'on fait et pourquoi. Pas de jargon inutile, mais si vous voulez savoir ce qu'est une contrefiche, on vous la montre.</p>
+      </div>
+      <dl class="gloss">
+        <div><dt>Arbalétrier</dt><dd>Pièce inclinée qui porte les pannes et donne la pente du toit.</dd></div>
+        <div><dt>Entrait</dt><dd>Poutre horizontale à la base de la ferme. Elle empêche le toit de s'écarter.</dd></div>
+        <div><dt>Poinçon</dt><dd>Pièce verticale centrale qui relie le faîtage à l'entrait.</dd></div>
+        <div><dt>Noue</dt><dd>Angle rentrant entre deux pans de toit, là où l'eau se concentre.</dd></div>
+        <div><dt>Solin</dt><dd>Raccord étanche entre la couverture et un mur ou une cheminée.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Déroulement</p>
+        <h2>Comment se passe un chantier</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Visite</h3><p>On monte voir l'état réel du toit et on prend les mesures.</p></div>
+        <div class="step"><h3>Devis détaillé</h3><p>Chaque poste chiffré, matériaux nommés, délais annoncés.</p></div>
+        <div class="step"><h3>Chantier</h3><p>Bâchage, protection des abords, travail propre chaque soir.</p></div>
+        <div class="step"><h3>Réception</h3><p>On fait le tour ensemble et on vous remet les garanties.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="avis" class="reviews-sec">
+    <div class="wrap">
+      <div class="reviews-head">
+        <div class="head" style="margin-bottom:0">
+          <p class="eyebrow">Avis clients</p>
+          <h2>Ce qu'en disent les clients</h2>
+        </div>
+        <div class="score"><span class="big">5,0</span><span class="stars" aria-hidden="true">★★★★★</span><span class="muted">10 avis sur Google</span></div>
+      </div>
+      <div class="reviews">
+        <blockquote><p>Une entreprise très fiable et compétente. Ils ont entièrement refait la toiture de notre maison. Le résultat est excellent, les délais ont été respectés et les prix étaient dans ceux du marché.</p><cite>Réfection complète de toiture</cite></blockquote>
+        <blockquote><p>Nous les avons contactés en urgence pour une fuite sur notre toit, ils ont réagi très vite. Efficaces et compétents, nous les recontacterons sans hésiter.</p><cite>Intervention sur fuite</cite></blockquote>
+        <blockquote><p>Travail efficace et professionnel. L'artisan et son équipe connaissent leur métier. Comme pour tout bon artisan, il y a un petit délai avant de commencer, mais vu le résultat, ça valait l'attente.</p><cite>Travaux de couverture</cite></blockquote>
+      </div>
+      <div class="cta" style="margin-top:28px">
+        <a class="btn btn-fill" href="https://maps.google.com/?cid=9413457451667731249" target="_blank" rel="noopener">Voir tous les avis sur Google</a>
+        <a class="btn btn-line" href="https://search.google.com/local/writereview?placeid=ChIJEVCHxxCycqQRMbPoeq1Ro4I" target="_blank" rel="noopener">Laisser un avis</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="artisan" style="padding-top:0">
+    <div class="wrap artisan">
+      <figure class="portrait"><img src="img/georges2.jpg" alt="Georges Do Vale Alves devant une couverture en zinc en cours de pose" loading="lazy" width="1051" height="1400"></figure>
+      <div class="artisan-text">
+        <p class="eyebrow">L'artisan</p>
+        <h2>Georges Do Vale Alves</h2>
+        <p>Charpentier-couvreur installé à Gournay-sur-Marne depuis 2004. C'est lui qui vient voir votre toit, qui établit le devis et qui est sur la charpente pendant le chantier.</p>
+        <p>Pas de sous-traitance en cascade ni de commercial entre vous et l'artisan : vous avez son numéro, vous l'appelez.</p>
+        <a class="btn btn-fill" href="#devis">Parler de votre projet</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="zone" class="zone">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">Secteur d'intervention</p>
+        <h2>Gournay-sur-Marne et les bords de Marne</h2>
+        <p>Basés à Gournay, on intervient principalement en Seine-Saint-Denis, Seine-et-Marne et Val-de-Marne.</p>
+      </div>
+      <ul class="towns">
+        <li class="home">Gournay-sur-Marne</li>
+        <li>Noisy-le-Grand</li><li>Champs-sur-Marne</li><li>Chelles</li><li>Neuilly-sur-Marne</li>
+        <li>Le Perreux-sur-Marne</li><li>Bry-sur-Marne</li><li>Vaires-sur-Marne</li><li>Torcy</li>
+        <li>Noisiel</li><li>Villiers-sur-Marne</li><li>Gagny</li><li>Montfermeil</li><li>Lagny-sur-Marne</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="faq" class="faq-sec">
+    <div class="wrap faq-wrap">
+      <div class="head">
+        <p class="eyebrow">Questions fréquentes</p>
+        <h2>Avant de nous appeler</h2>
+        <p>Une autre question ? Le plus simple reste de téléphoner au 06 71 00 98 04.</p>
+      </div>
+      <div class="faq">
+        <details><summary>Le devis est-il payant ?</summary><p>Non. La visite et le devis sont gratuits et sans engagement. On monte voir l'état du toit avant de chiffrer, pour que le prix corresponde aux travaux réels.</p></details>
+        <details><summary>Intervenez-vous en urgence pour une fuite ?</summary><p>Oui. Appelez directement : on se déplace au plus vite pour mettre le toit hors d'eau, trouver l'origine de la fuite et vous proposer la réparation.</p></details>
+        <details><summary>Quelle est la différence entre une charpente traditionnelle et des fermettes ?</summary><p>Les fermettes sont des éléments industriels légers posés tous les 60 cm environ, qui occupent les combles. Une charpente traditionnelle utilise des pièces plus fortes, assemblées à la main, plus espacées : elle dure plus longtemps et laisse les combles aménageables.</p></details>
+        <details><summary>Dans quelles villes intervenez-vous ?</summary><p>Principalement autour de Gournay-sur-Marne : Noisy-le-Grand, Champs-sur-Marne, Chelles, Neuilly-sur-Marne, Le Perreux, Bry-sur-Marne et les communes voisines en 93, 77 et 94.</p></details>
+        <details><summary>Quels matériaux posez-vous ?</summary><p>Tuiles mécaniques et plates, ardoise, zinc à joint debout ou à tasseaux, et toute la zinguerie : gouttières, chéneaux, descentes, solins. Fenêtres de toit comprises.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="devis">
+    <div class="wrap contact">
+      <div class="coords">
+        <div class="head" style="margin-bottom:8px">
+          <p class="eyebrow">Contact</p>
+          <h2>Un projet, une fuite, une question ?</h2>
+          <p>Devis gratuit et sans engagement. Laissez votre numéro, on vous rappelle.</p>
+        </div>
+        <div><div class="k">Téléphone</div><div class="v">06 71 00 98 04</div></div>
+        <div><div class="k">E-mail</div><div class="v v-mail">entreprisedovale@yahoo.fr</div></div>
+        <div><div class="k">Adresse</div><div class="v">14 avenue Aristide Briand<br>93460 Gournay-sur-Marne</div></div>
+        <div><div class="k">Horaires</div><div class="v">Lun–ven 8 h – 19 h<br>Samedi 8 h – 12 h</div></div>
+        <div><div class="k">Artisan</div><div class="v">Georges Do Vale Alves</div></div>
+      </div>
+      <form id="f" novalidate>
+        <div class="row">
+          <label for="nom">Nom<input id="nom" name="nom" required autocomplete="name"></label>
+          <label for="tel">Téléphone<input id="tel" name="tel" type="tel" required autocomplete="tel"></label>
+        </div>
+        <div class="row">
+          <label for="ville">Ville du chantier<input id="ville" name="ville" required></label>
+          <label for="type">Type de travaux
+            <select id="type" name="type">
+              <option>Charpente</option><option>Couverture</option><option>Zinguerie / gouttières</option>
+              <option>Fuite / réparation urgente</option><option>Démoussage / entretien</option><option>Autre</option>
+            </select>
+          </label>
+        </div>
+        <label for="msg">Votre projet<textarea id="msg" name="msg" placeholder="Surface approximative, type de toiture, problème constaté…"></textarea></label>
+        <button class="btn btn-fill" type="submit">Envoyer ma demande</button>
+        <p class="ok" id="ok" hidden></p>
+      </form>
+    </div>
+  </section>
+  <section class="final">
+    <div class="wrap final-in">
+      <div><h2>Une fuite, un projet de toiture ?</h2><p>Appelez Georges directement, ou laissez votre numéro et il vous rappelle.</p></div>
+      <div class="final-cta"><span class="final-tel">06 71 00 98 04</span><a class="btn btn-fill" href="#devis">Être rappelé</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-col"><span class="brand">Entreprise Do Vale<small>Couverture · Charpente</small></span><p>Charpente traditionnelle, couverture et zinguerie à Gournay-sur-Marne et dans l'Est parisien, depuis 2004.</p></div>
+    <div class="foot-col"><span class="fh">Le site</span><a href="#prestations">Prestations</a><a href="#realisations">Réalisations</a><a href="#avis">Avis clients</a><a href="#faq">FAQ</a><a href="#devis">Contact</a></div>
+    <div class="foot-col"><span class="fh">Contact</span><span>06 71 00 98 04</span><span>entreprisedovale@yahoo.fr</span><span>14 avenue Aristide Briand<br>93460 Gournay-sur-Marne</span><span>Lun–ven 8 h – 19 h · sam 8 h – 12 h</span></div>
+  </div>
+  <div class="wrap foot-legal">
+    <span>© 2026 Entreprise Do Vale · Entrepreneur individuel · SIRET 453 611 063 00034 · NAF 43.91A</span>
+    <span>Mentions légales · Politique de confidentialité</span>
+  </div>
+</footer>
+
+<script>
+document.getElementById('f').addEventListener('submit',function(e){
+  e.preventDefault();
+  var ok=document.getElementById('ok');
+  var need=['nom','tel','ville'].filter(function(id){return !document.getElementById(id).value.trim()});
+  if(need.length){ok.textContent='Merci de renseigner votre nom, votre téléphone et la ville du chantier.';ok.hidden=false;return;}
+  ok.textContent='Aperçu : sur le site en ligne, cette demande arrivera directement sur entreprisedovale@yahoo.fr. En attendant, appelez le 06 71 00 98 04 ou écrivez à cette adresse.';
+  ok.hidden=false;
+});
+
+(function(){
+  var chips=document.querySelectorAll('.chip'),figs=document.querySelectorAll('#gallery figure');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    var f=c.dataset.f;
+    chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});
+    figs.forEach(function(g){g.hidden=!(f==='all'||g.dataset.cat===f)});
+  })});
+})();
+</script>
+
+</body>
+</html>
